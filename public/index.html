@@ -3,15 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>SELOV SHAREBOOST</title>
+  <title>SELOV ShareBooster</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-  <link rel="icon" href="https://i.imgur.com/zi15QL3.png" type="image/png">
-  <link rel="apple-touch-icon" href="https://i.imgur.com/zi15QL3.png">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="theme-color" content="#1E1A34">
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -29,109 +24,98 @@
             'input-bg': 'rgba(43, 42, 62, 0.5)',
             'input-border': 'rgba(139, 92, 246, 0.3)',
             'nav-bg': 'rgba(30, 26, 52, 0.95)',
-            'nav-border': 'rgba(139, 92, 246, 0.2)',
-            'modal-bg': '#2a2744',
-            'success-bg': '#166534',
-            'success-text': '#dcfce7',
-            'error-bg': '#991b1b',
-            'error-text': '#fee2e2',
-            'info-bg': 'rgba(139, 92, 246, 0.1)',
-            'info-text': '#d8b4fe',
-            'info-border': 'rgba(139, 92, 246, 0.3)',
-            'warning-bg': 'rgba(245, 158, 11, 0.1)',
-            'warning-text': '#fde68a',
-            'warning-border': 'rgba(217, 119, 6, 0.3)'
-          },
-          boxShadow: {
-            'primary-glow': '0 0 15px rgba(139, 92, 246, 0.3)',
-            'card': '0 5px 20px rgba(0, 0, 0, 0.2)',
-            'header': '0 2px 10px rgba(30, 26, 52, 0.2)',
-            'nav': '0 -2px 10px rgba(30, 26, 52, 0.2)'
+            'nav-border': 'rgba(139, 92, 246, 0.2)'
           }
         }
       }
     }
   </script>
   <style>
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; background-color: #1E1A34; color: #E5E7EB; }
+    body { font-family: 'Poppins', sans-serif; background-color: #1E1A34; color: #E5E7EB; }
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #8B5CF6; border-radius: 3px; }
     .content-section { display: none; animation: fadeIn 0.3s ease-out; }
     .content-section.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-    .section-title { text-align: center; font-size: 1.5rem; font-weight: 600; margin-bottom: 1.75rem; position: relative; }
-    .modal { display: none; position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.75); z-index: 1050; justify-content: center; align-items: center; padding: 1rem; }
-    .modal-content { padding: 1.75rem; border-radius: 16px; text-align: center; min-width: 300px; max-width: 90%; border: 1px solid rgba(139, 92, 246, 0.15); background-color: #2a2744; color: #E5E7EB; position: relative; }
-    .modal-content.success { border-left: 5px solid #22c55e; background-color: #166534; color: #dcfce7; }
-    .modal-content.error { border-left: 5px solid #ef4444; background-color: #991b1b; color: #fee2e2; }
-    .nav-indicator { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
     .format-tab { transition: all 0.2s ease; cursor: pointer; }
     .format-tab.active { background: rgba(139, 92, 246, 0.2); color: #8B5CF6; border-bottom: 2px solid #8B5CF6; }
     .format-content { display: none; }
     .format-content.active { display: block; }
+    .nav-indicator { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    textarea, input { outline: none; }
+    textarea:focus, input:focus { border-color: #8B5CF6 !important; ring: 2px solid rgba(139, 92, 246, 0.2); }
   </style>
 </head>
-<body class="bg-bg-container text-text-main font-poppins">
+<body>
 <div class="max-w-md mx-auto min-h-screen pb-20 bg-bg-container shadow-lg flex flex-col relative overflow-x-hidden">
 
   <!-- Header -->
-  <header class="p-4 border-b bg-nav-bg border-nav-border sticky top-0 z-40 backdrop-blur-md shadow-header">
+  <header class="p-4 border-b bg-nav-bg border-nav-border sticky top-0 z-40 backdrop-blur-md">
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-2.5">
-        <img src="https://i.imgur.com/zi15QL3.png" alt="Logo" class="w-8 h-8 bg-primary p-1 rounded-lg">
-        <h1 class="text-xl font-semibold">SELOV ShareBooster</h1>
-        <span class="text-xs font-medium text-primary bg-primary/10 px-2 py-0.5 rounded-full">v2.1.0</span>
+        <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+          <i data-lucide="share-2" class="w-5 h-5 text-white"></i>
+        </div>
+        <h1 class="text-xl font-semibold text-text-main">SELOV ShareBooster</h1>
+        <span class="text-xs font-medium text-primary bg-primary/10 px-2 py-0.5 rounded-full">v2.0</span>
       </div>
-      <div class="flex items-center space-x-3">
-        <button id="menu-button" class="text-text-muted hover:text-primary transition-colors">
-          <i data-lucide="menu" class="w-5 h-5"></i>
-        </button>
-      </div>
+      <button id="menu-button" class="text-text-muted hover:text-primary">
+        <i data-lucide="menu" class="w-5 h-5"></i>
+      </button>
     </div>
   </header>
 
   <!-- Main Content -->
   <main class="flex-grow overflow-y-auto p-5">
     <div class="content-sections">
+      
       <!-- Home Section -->
       <section id="home-section" class="content-section active">
-        <form id="share-boost-form" class="space-y-5 mt-5">
+        <form id="share-form" class="space-y-4">
+          
           <!-- Format Tabs -->
-          <div class="flex gap-2 border-b border-border-color pb-2">
+          <div class="flex gap-1 border-b border-border-color pb-2">
             <button type="button" data-format="json" class="format-tab active px-4 py-2 text-sm font-medium rounded-t-lg">📦 Appstate JSON</button>
             <button type="button" data-format="cookie" class="format-tab px-4 py-2 text-sm font-medium rounded-t-lg">🍪 Cookie String</button>
             <button type="button" data-format="netscape" class="format-tab px-4 py-2 text-sm font-medium rounded-t-lg">🌐 Netscape</button>
           </div>
 
-          <!-- JSON Format -->
-          <div id="json-format" class="format-content active">
-            <div class="input-group">
+          <!-- Appstate JSON Format -->
+          <div id="json-format" class="format-content active space-y-4">
+            <div>
               <label class="text-sm font-medium text-text-muted mb-1.5 block flex items-center gap-1.5">
-                <i data-lucide="cookie" class="w-4 h-4 text-primary"></i> Appstate JSON:
+                <i data-lucide="code" class="w-4 h-4 text-primary"></i> Appstate JSON:
               </label>
-              <textarea id="jsonInput" rows="4" class="w-full p-3 rounded-lg border bg-input-bg border-input-border text-text-main placeholder-text-muted focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm font-mono" placeholder='[{"key":"c_user","value":"123456"},{"key":"xs","value":"abc123"}]'></textarea>
+              <textarea id="jsonInput" rows="6" class="w-full p-3 rounded-lg border bg-input-bg border-input-border text-text-main placeholder-text-muted focus:border-primary transition-all text-sm font-mono" placeholder='[
+  {"key": "c_user", "value": "61588731246204"},
+  {"key": "xs", "value": "45%3A_SblN0PXwBJUIw%3A2%3A1778170950%3A-1%3A-1"}
+]'></textarea>
+              <p class="text-xs text-text-muted mt-1">Paste JSON array from Cookie-Editor export</p>
             </div>
           </div>
 
           <!-- Cookie String Format -->
-          <div id="cookie-format" class="format-content">
-            <div class="input-group">
+          <div id="cookie-format" class="format-content space-y-4">
+            <div>
               <label class="text-sm font-medium text-text-muted mb-1.5 block flex items-center gap-1.5">
                 <i data-lucide="cookie" class="w-4 h-4 text-primary"></i> Cookie String:
               </label>
-              <textarea id="cookieInput" rows="4" class="w-full p-3 rounded-lg border bg-input-bg border-input-border text-text-main placeholder-text-muted focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm font-mono" placeholder='c_user=123456; xs=abc123; datr=xyz789'></textarea>
+              <textarea id="cookieInput" rows="4" class="w-full p-3 rounded-lg border bg-input-bg border-input-border text-text-main placeholder-text-muted focus:border-primary transition-all text-sm font-mono" placeholder='c_user=61588731246204; xs=45%3A_SblN0PXwBJUIw%3A2%3A1778170950%3A-1%3A-1; datr=Erz8aTlBx7on9c6fJoYHIyWt'></textarea>
+              <p class="text-xs text-text-muted mt-1">Format: name=value; name2=value2</p>
             </div>
           </div>
 
           <!-- Netscape Format -->
-          <div id="netscape-format" class="format-content">
-            <div class="input-group">
+          <div id="netscape-format" class="format-content space-y-4">
+            <div>
               <label class="text-sm font-medium text-text-muted mb-1.5 block flex items-center gap-1.5">
-                <i data-lucide="cookie" class="w-4 h-4 text-primary"></i> Netscape Format:
+                <i data-lucide="file-text" class="w-4 h-4 text-primary"></i> Netscape Format:
               </label>
-              <textarea id="netscapeInput" rows="4" class="w-full p-3 rounded-lg border bg-input-bg border-input-border text-text-main placeholder-text-muted focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm font-mono" placeholder='.facebook.com TRUE / FALSE 0 c_user 123456'></textarea>
+              <textarea id="netscapeInput" rows="5" class="w-full p-3 rounded-lg border bg-input-bg border-input-border text-text-main placeholder-text-muted focus:border-primary transition-all text-sm font-mono" placeholder='# Netscape HTTP Cookie File
+.facebook.com	TRUE	/	FALSE	0	c_user	61588731246204
+.facebook.com	TRUE	/	FALSE	0	xs	45%3A_SblN0PXwBJUIw%3A2%3A1778170950%3A-1%3A-1'></textarea>
+              <p class="text-xs text-text-muted mt-1">Paste Netscape format cookie file</p>
             </div>
           </div>
 
@@ -140,59 +124,59 @@
             <label class="text-sm font-medium text-text-muted mb-1.5 block flex items-center gap-1.5">
               <i data-lucide="link" class="w-4 h-4 text-primary"></i> Post Link:
             </label>
-            <input type="url" id="postUrl" class="w-full p-3 rounded-lg border bg-input-bg border-input-border text-text-main placeholder-text-muted focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm" placeholder="https://www.facebook.com/...">
+            <input type="url" id="postUrl" class="w-full p-3 rounded-lg border bg-input-bg border-input-border text-text-main placeholder-text-muted focus:border-primary transition-all text-sm" placeholder="https://www.facebook.com/...">
           </div>
 
-          <!-- Share Settings -->
+          <!-- Share Limit & Delay -->
           <div class="grid grid-cols-2 gap-4">
             <div>
               <label class="text-sm font-medium text-text-muted mb-1.5 block flex items-center gap-1.5">
                 <i data-lucide="hash" class="w-4 h-4 text-primary"></i> Share Limit:
               </label>
-              <input type="number" id="shareAmount" class="w-full p-3 rounded-lg border bg-input-bg border-input-border text-text-main placeholder-text-muted focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm" placeholder="e.g., 100" min="1" value="10">
+              <input type="number" id="shareAmount" class="w-full p-3 rounded-lg border bg-input-bg border-input-border text-text-main placeholder-text-muted focus:border-primary transition-all text-sm" placeholder="10" min="1" value="10">
             </div>
             <div>
               <label class="text-sm font-medium text-text-muted mb-1.5 block flex items-center gap-1.5">
                 <i data-lucide="timer" class="w-4 h-4 text-primary"></i> Delay (sec):
               </label>
-              <input type="number" id="shareInterval" class="w-full p-3 rounded-lg border bg-input-bg border-input-border text-text-main placeholder-text-muted focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm" placeholder="e.g., 10" min="1" value="5">
+              <input type="number" id="shareInterval" class="w-full p-3 rounded-lg border bg-input-bg border-input-border text-text-main placeholder-text-muted focus:border-primary transition-all text-sm" placeholder="5" min="1" value="5">
             </div>
           </div>
 
-          <!-- Submit Button -->
-          <button type="submit" id="submit-button" class="w-full bg-primary text-white py-3 rounded-lg font-semibold text-base hover:bg-primary-darker transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed shadow-md hover:shadow-lg shadow-primary/30 active:scale-[0.98]">
-            <span class="button-text">Start Boosting</span>
+          <!-- Start Button -->
+          <button type="submit" id="submitBtn" class="w-full bg-primary text-white py-3 rounded-lg font-semibold text-base hover:bg-primary-darker transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg shadow-primary/30 active:scale-[0.98] mt-6">
+            <i data-lucide="rocket" class="w-5 h-5"></i>
+            <span>Start Boosting</span>
           </button>
         </form>
       </section>
 
       <!-- Tutorial Section -->
       <section id="tutorial-section" class="content-section">
-        <h2 class="section-title">Video Tutorial</h2>
-        <div class="p-3 bg-bg-card rounded-xl border border-border-color shadow-card">
-          <video class="w-full rounded-lg" controls preload="metadata">
-            <source src="https://sharebooster-by-bogart.vercel.app/tutorial.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
+        <h2 class="text-2xl font-semibold text-center mb-6">Video Tutorial</h2>
+        <div class="p-3 bg-bg-card rounded-xl border border-border-color">
+          <div class="bg-black rounded-lg aspect-video flex items-center justify-center">
+            <i data-lucide="play-circle" class="w-16 h-16 text-primary opacity-50"></i>
+          </div>
         </div>
-        <p class="text-center text-sm text-text-muted mt-6 px-2">Watch the video to learn how to get your appstate and use the Share Boost tool correctly.</p>
+        <p class="text-center text-sm text-text-muted mt-4 px-2">Watch the video to learn how to get your appstate and use the Share Boost tool correctly.</p>
       </section>
 
       <!-- Notifications Section -->
       <section id="notifications-section" class="content-section">
-        <h2 class="section-title">Notifications</h2>
-        <div id="notifications-list" class="space-y-4">
-          <div class="flex items-start gap-3 p-3.5 bg-info-bg rounded-lg border border-info-border">
+        <h2 class="text-2xl font-semibold text-center mb-6">Notifications</h2>
+        <div class="space-y-3">
+          <div class="flex items-start gap-3 p-3 rounded-lg bg-primary/10 border border-primary/30">
             <i data-lucide="info" class="w-5 h-5 text-primary flex-shrink-0 mt-0.5"></i>
             <span class="text-sm text-info-text">Supports Appstate JSON, Cookie String, and Netscape formats!</span>
           </div>
-          <div class="flex items-start gap-3 p-3.5 bg-info-bg rounded-lg border border-info-border">
-            <i data-lucide="info" class="w-5 h-5 text-primary flex-shrink-0 mt-0.5"></i>
-            <span class="text-sm text-info-text">Ensure your cookie contains c_user and xs for successful sharing.</span>
-          </div>
-          <div class="flex items-start gap-3 p-3.5 bg-warning-bg rounded-lg border border-warning-border">
+          <div class="flex items-start gap-3 p-3 rounded-lg bg-primary/10 border border-primary/30">
             <i data-lucide="alert-triangle" class="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5"></i>
-            <span class="text-sm text-warning-text">Use responsibly. Avoid excessive sharing to prevent Facebook restrictions.</span>
+            <span class="text-sm text-yellow-200">Use responsibly. Avoid excessive sharing to prevent restrictions.</span>
+          </div>
+          <div class="flex items-start gap-3 p-3 rounded-lg bg-primary/10 border border-primary/30">
+            <i data-lucide="check-circle" class="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5"></i>
+            <span class="text-sm text-green-200">Make sure your cookie contains c_user and xs values.</span>
           </div>
         </div>
       </section>
@@ -200,40 +184,48 @@
   </main>
 
   <!-- Bottom Navigation -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-nav-bg border-t border-nav-border max-w-md mx-auto backdrop-blur-md z-50 shadow-nav">
+  <nav class="fixed bottom-0 left-0 right-0 bg-nav-bg border-t border-nav-border max-w-md mx-auto backdrop-blur-md z-50">
     <div class="relative">
-      <div class="flex justify-around items-center px-3 py-2.5">
+      <div class="flex justify-around items-center px-3 py-2">
         <a href="#" data-section="home" class="nav-item flex flex-col items-center text-primary p-2 w-1/3">
-          <i data-lucide="home" class="w-5 h-5 mb-0.5"></i><span class="text-xs font-medium">Home</span>
+          <i data-lucide="home" class="w-5 h-5 mb-0.5"></i>
+          <span class="text-xs font-medium">Home</span>
         </a>
         <a href="#" data-section="tutorial" class="nav-item flex flex-col items-center text-text-muted p-2 w-1/3 hover:text-primary transition-colors">
-          <i data-lucide="play-circle" class="w-5 h-5 mb-0.5"></i><span class="text-xs font-medium">Tutorial</span>
+          <i data-lucide="play-circle" class="w-5 h-5 mb-0.5"></i>
+          <span class="text-xs font-medium">Tutorial</span>
         </a>
         <a href="#" data-section="notifications" class="nav-item flex flex-col items-center text-text-muted p-2 w-1/3 hover:text-primary transition-colors">
-          <i data-lucide="bell" class="w-5 h-5 mb-0.5"></i><span class="text-xs font-medium">Notify</span>
+          <i data-lucide="bell" class="w-5 h-5 mb-0.5"></i>
+          <span class="text-xs font-medium">Notify</span>
         </a>
       </div>
-      <div class="nav-indicator absolute bottom-0 left-0 h-1 bg-primary rounded-t-full" style="width: 33.33%"></div>
+      <div class="nav-indicator absolute bottom-0 left-0 h-0.5 bg-primary rounded-t-full" style="width: 33.33%"></div>
     </div>
   </nav>
 
-  <!-- Modals -->
-  <div id="responseModal" class="modal">
-    <div class="modal-content flex flex-col items-center gap-3">
-      <div id="modal-icon"></div>
-      <div id="responseMessage" class="text-sm font-medium"></div>
+  <!-- Modal -->
+  <div id="responseModal" class="fixed inset-0 bg-black/70 z-50 hidden justify-center items-center p-4">
+    <div class="bg-modal-bg rounded-xl p-5 max-w-sm w-full text-center border border-border-color">
+      <div id="modalIcon" class="flex justify-center mb-3">
+        <i data-lucide="info" class="w-12 h-12 text-primary"></i>
+      </div>
+      <p id="modalMessage" class="text-text-main text-sm"></p>
+      <button id="closeModal" class="mt-4 px-4 py-2 bg-primary rounded-lg text-white text-sm hover:bg-primary-darker transition-colors">Close</button>
     </div>
   </div>
 
   <!-- Side Menu -->
-  <div id="menu-overlay" class="fixed inset-0 bg-black/60 z-[55] hidden opacity-0"></div>
-  <div id="side-menu" class="fixed top-0 left-0 bottom-0 w-72 bg-nav-bg shadow-lg z-[60] flex flex-col p-5 border-r border-nav-border transform -translate-x-full transition-transform duration-300">
+  <div id="menuOverlay" class="fixed inset-0 bg-black/60 z-[55] hidden"></div>
+  <div id="sideMenu" class="fixed top-0 left-0 bottom-0 w-72 bg-nav-bg shadow-xl z-[60] flex flex-col p-5 border-r border-nav-border transform -translate-x-full transition-transform duration-300">
     <div class="flex items-center justify-between mb-6">
-      <div class="flex items-center gap-2.5">
-        <img src="https://i.imgur.com/zi15QL3.png" alt="Logo" class="w-8 h-8 bg-primary p-1 rounded-lg">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+          <i data-lucide="share-2" class="w-5 h-5 text-white"></i>
+        </div>
         <h2 class="text-lg font-semibold">Menu</h2>
       </div>
-      <button id="close-menu-button" class="text-text-muted hover:text-primary p-1 rounded-full hover:bg-white/10">
+      <button id="closeMenuBtn" class="text-text-muted hover:text-primary">
         <i data-lucide="x" class="w-5 h-5"></i>
       </button>
     </div>
@@ -249,8 +241,8 @@
       </a>
     </nav>
     <div class="mt-auto pt-4 border-t border-nav-border">
-      <a href="https://www.facebook.com/profile.php" target="_blank" class="flex items-center justify-center gap-2 w-full bg-primary/10 text-primary py-2.5 px-4 rounded-lg font-semibold text-sm hover:bg-primary/20 transition-all duration-300">
-        <i data-lucide="code" class="w-4 h-4"></i> SELOV PROFILE
+      <a href="https://www.facebook.com/quart.hade" target="_blank" class="flex items-center justify-center gap-2 w-full bg-primary/10 text-primary py-2 px-4 rounded-lg font-semibold text-sm hover:bg-primary/20 transition-all">
+        <i data-lucide="facebook" class="w-4 h-4"></i> SELOV Profile
       </a>
     </div>
   </div>
@@ -266,10 +258,11 @@ const netscapeInput = document.getElementById('netscapeInput');
 const postUrl = document.getElementById('postUrl');
 const shareAmount = document.getElementById('shareAmount');
 const shareInterval = document.getElementById('shareInterval');
-const submitBtn = document.getElementById('submit-button');
-const responseModal = document.getElementById('responseModal');
-const responseMessage = document.getElementById('responseMessage');
-const modalIcon = document.getElementById('modal-icon');
+const submitBtn = document.getElementById('submitBtn');
+const modal = document.getElementById('responseModal');
+const modalMessage = document.getElementById('modalMessage');
+const modalIcon = document.getElementById('modalIcon');
+const closeModal = document.getElementById('closeModal');
 
 let currentFormat = 'json';
 
@@ -285,7 +278,7 @@ document.querySelectorAll('.format-tab').forEach(tab => {
   });
 });
 
-// Get current cookie value based on selected format
+// Get current cookie value
 function getCookieValue() {
   if (currentFormat === 'json') {
     return jsonInput.value.trim();
@@ -296,44 +289,30 @@ function getCookieValue() {
   }
 }
 
-function showModal(message, type = 'info') {
-  responseMessage.textContent = message;
-  responseModal.style.display = 'flex';
-  const modalContent = responseModal.querySelector('.modal-content');
-  modalContent.className = 'modal-content flex flex-col items-center gap-3';
-  
-  let iconName = 'info';
-  let iconColor = 'text-primary';
-  
-  if (type === 'success') {
-    modalContent.classList.add('success');
-    iconName = 'check-circle-2';
-    iconColor = 'text-status-active';
-  } else if (type === 'error') {
-    modalContent.classList.add('error');
-    iconName = 'alert-circle';
-    iconColor = 'text-status-offline';
-  }
-  
-  modalIcon.innerHTML = `<i data-lucide="${iconName}" class="w-8 h-8 ${iconColor}"></i>`;
+function showModal(message, isError = false) {
+  modalMessage.textContent = message;
+  modalIcon.innerHTML = isError 
+    ? '<i data-lucide="alert-circle" class="w-12 h-12 text-red-500"></i>'
+    : '<i data-lucide="check-circle" class="w-12 h-12 text-green-500"></i>';
   lucide.createIcons();
-  
-  setTimeout(() => {
-    if (responseModal.style.display === 'flex') {
-      responseModal.style.display = 'none';
-    }
-  }, 4000);
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
 }
 
-// Close modal on click outside
-responseModal.addEventListener('click', (event) => {
-  if (event.target === responseModal) {
-    responseModal.style.display = 'none';
+closeModal.addEventListener('click', () => {
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+});
+
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
   }
 });
 
 // Form submission
-document.getElementById('share-boost-form').addEventListener('submit', async (e) => {
+document.getElementById('share-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   
   const cookie = getCookieValue();
@@ -341,39 +320,60 @@ document.getElementById('share-boost-form').addEventListener('submit', async (e)
   const amount = shareAmount.value;
   const interval = shareInterval.value;
   
-  if (!cookie || !url || !amount || !interval) {
-    showModal('Please fill in all fields.', 'error');
+  if (!cookie) {
+    showModal('Please enter your cookie/appstate', true);
     return;
   }
   
-  // Disable button during submission
+  if (!url) {
+    showModal('Please enter a Facebook post URL', true);
+    return;
+  }
+  
+  if (!amount || amount < 1) {
+    showModal('Please enter a valid share amount (min 1)', true);
+    return;
+  }
+  
+  if (!interval || interval < 1) {
+    showModal('Please enter a valid delay (min 1 second)', true);
+    return;
+  }
+  
+  // Disable button
   submitBtn.disabled = true;
-  const originalText = submitBtn.querySelector('.button-text').textContent;
-  submitBtn.querySelector('.button-text').textContent = 'Processing...';
+  const originalText = submitBtn.querySelector('span').textContent;
+  submitBtn.querySelector('span').textContent = 'Processing...';
   
   try {
     const response = await fetch('/api/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ cookie, url, amount: parseInt(amount), interval: parseInt(interval) })
+      body: JSON.stringify({ 
+        cookie, 
+        url, 
+        amount: parseInt(amount), 
+        interval: parseInt(interval) 
+      })
     });
     
     const data = await response.json();
     
     if (response.ok && data.status === 200) {
-      showModal(data.message || 'Share session started successfully!', 'success');
-      // Clear only cookie inputs, keep URL and settings
+      showModal(data.message || 'Share session started successfully!');
+      // Clear forms
       jsonInput.value = '';
       cookieInput.value = '';
       netscapeInput.value = '';
+      postUrl.value = '';
     } else {
-      showModal(data.error || 'Failed to start share session.', 'error');
+      showModal(data.error || 'Failed to start share session.', true);
     }
   } catch (error) {
-    showModal('Network error: ' + error.message, 'error');
+    showModal('Network error: ' + error.message, true);
   } finally {
     submitBtn.disabled = false;
-    submitBtn.querySelector('.button-text').textContent = originalText;
+    submitBtn.querySelector('span').textContent = originalText;
   }
 });
 
@@ -387,11 +387,14 @@ function setActiveSection(sectionName) {
   contentSections.forEach(section => section.classList.remove('active'));
   document.getElementById(`${sectionName}-section`).classList.add('active');
   
-  navItems.forEach((item, index) => {
+  const sections = ['home', 'tutorial', 'notifications'];
+  const index = sections.indexOf(sectionName);
+  navIndicator.style.transform = `translateX(${index * 33.33}%)`;
+  
+  navItems.forEach((item, i) => {
     if (item.dataset.section === sectionName) {
       item.classList.remove('text-text-muted');
       item.classList.add('text-primary');
-      navIndicator.style.transform = `translateX(${index * 33.33}%)`;
     } else {
       item.classList.remove('text-primary');
       item.classList.add('text-text-muted');
@@ -426,27 +429,25 @@ sideMenuItems.forEach(item => {
 });
 
 // Side menu
-const menuButton = document.getElementById('menu-button');
-const sideMenu = document.getElementById('side-menu');
-const menuOverlay = document.getElementById('menu-overlay');
-const closeMenuButton = document.getElementById('close-menu-button');
+const menuBtn = document.getElementById('menu-button');
+const sideMenu = document.getElementById('sideMenu');
+const menuOverlay = document.getElementById('menuOverlay');
+const closeMenuBtn = document.getElementById('closeMenuBtn');
 
 function openSideMenu() {
-  sideMenu.classList.remove('translate-x-full');
+  sideMenu.classList.remove('-translate-x-full');
   sideMenu.classList.add('translate-x-0');
   menuOverlay.classList.remove('hidden');
-  setTimeout(() => menuOverlay.classList.remove('opacity-0'), 10);
 }
 
 function closeSideMenu() {
   sideMenu.classList.remove('translate-x-0');
-  sideMenu.classList.add('translate-x-full');
-  menuOverlay.classList.add('opacity-0');
-  setTimeout(() => menuOverlay.classList.add('hidden'), 300);
+  sideMenu.classList.add('-translate-x-full');
+  menuOverlay.classList.add('hidden');
 }
 
-menuButton.addEventListener('click', openSideMenu);
-closeMenuButton.addEventListener('click', closeSideMenu);
+menuBtn.addEventListener('click', openSideMenu);
+closeMenuBtn.addEventListener('click', closeSideMenu);
 menuOverlay.addEventListener('click', closeSideMenu);
 
 // Set initial active section

@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FB Share Bot -Selov Auto Facebook Post Sharer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+        
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header p {
+            color: #888;
+            margin-top: 10px;
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+        }
+        
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: #888;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 1em;
+        }
+        
+        .tab-btn:hover {
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+        }
+        
+        .tab-btn.active {
+            background: rgba(102,126,234,0.2);
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Cards */
+        .card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .card h3 {
+            margin-bottom: 15px;
+            color: #ffd700;
+        }
+        
+        /* Input Groups */
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #aaa;
+            font-size: 0.9em;
+        }
+        
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-family: monospace;
+        }
+        
+        .input-group input:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(102,126,234,0.1);
+        }
+        
+        .input-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        
+        /* Format Hint */
+        .format-hint {
+            font-size: 0.8em;
+            color: #888;
+            margin-top: 8px;
+        }
+        
+        .format-hint a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .format-example {
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-family: monospace;
+            font-size: 0.8em;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        
+        /* Slider */
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        input[type="range"] {
+            flex: 1;
+            height: 5px;
+            -webkit-appearance: none;
+            background: rgba(255,255,255,0.2);
+            border-radius: 5px;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #667eea;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .slider-value {
+            min-width: 80px;
+            text-align: center;
+            background: rgba(102,126,234,0.2);
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+        
+        /* Buttons */
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102,126,234,0.4);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            margin-top: 10px;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        /* Status */
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .status-success {
+            background: rgba(68,255,68,0.1);
+            border: 1px solid #44ff44;
+            color: #88ff88;
+        }
+        
+        .status-error {
+            background: rgba(255,68,68,0.1);
+            border: 1px solid #ff4444;
+            color: #ff8888;
+        }
+        
+        .status-info {
+            background: rgba(102,126,234,0.1);
+            border: 1px solid #667eea;
+            color: #aabbff;
+        }
+        
+        /* Progress Bar */
+        .progress-container {
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-text {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #aaa;
+        }
+        
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Badge */
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7em;
+            margin-left: 8px;
+        }
+        
+        .badge-json {
+            background: #e67e22;
+        }
+        
+        .badge-cookie {
+            background: #2ecc71;
+        }
+        
+        .badge-netscape {
+            background: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📱 FB SHARE BOT</h1>
+            <p>Auto share Facebook posts with multiple accounts</p>
+        </div>
+        
+        <!-- Format Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="json">📦 Appstate JSON</button>
+            <button class="tab-btn" data-tab="cookie">🍪 Cookie String</button>
+            <button class="tab-btn" data-tab="netscape">🌐 Netscape Format</button>
+        </div>
+        
+        <!-- JSON Tab -->
+        <div class="tab-content active" id="json-tab">
+            <div class="card">
+                <h3>📦 Appstate JSON Format</h3>
+                <div class="input-group">
+                    <textarea id="jsonInput" placeholder='Paste your appstate JSON here...'></textarea>
+                    <div class="format-hint">
+                        Export from Cookie-Editor extension as JSON
+                    </div>
+                    <div class="format-example" id="jsonExample">
+                        [{"key":"c_user","value":"61567818301988"},{"key":"xs","value":"36%3AHsYaW8cWt9pS2Q..."}]
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Cookie String Tab -->
+        <div class="tab-content" id="cookie-tab">
+            <div class="card">
+                <h3>🍪 Cookie String Format</h3>
+                <div class="input-group">
+                    <textarea id="cookieStringInput" placeholder='Paste your cookie string here...'></textarea>
+                    <div class="format-hint">
+                        Format: c_user=123456; xs=abc123; datr=xyz789
+                    </div>
+                    <div class="format-example" id="cookieExample">
+                        c_user=61567818301988; xs=36%3AHsYaW8cWt9pS2Q%3A2%3A1778100441%3A-1%3A-1; datr=Uu-xaYs5P4gQWOlwX9fBfI3s
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Netscape Tab -->
+        <div class="tab-content" id="netscape-tab">
+            <div class="card">
+                <h3>🌐 Netscape Cookie Format</h3>
+                <div class="input-group">
+                    <textarea id="netscapeInput" placeholder='Paste your Netscape cookie file here...'></textarea>
+                    <div class="format-hint">
+                        Export from browser as Netscape HTTP Cookie File
+                    </div>
+                    <div class="format-example" id="netscapeExample">
+                        # Netscape HTTP Cookie File
+                        .facebook.com	TRUE	/	FALSE	0	c_user	61567818301988
+                        .facebook.com	TRUE	/	FALSE	0	xs	36%3AHsYaW8cWt9pS2Q...
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Post URL -->
+        <div class="card">
+            <h3>📎 Post URL</h3>
+            <div class="input-group">
+                <input type="text" id="urlInput" placeholder="https://www.facebook.com/username/posts/123456789">
+            </div>
+        </div>
+        
+        <!-- Share Settings -->
+        <div class="card">
+            <h3>📊 Share Settings</h3>
+            
+            <div class="input-group">
+                <label>Amount of Shares</label>
+                <div class="slider-container">
+                    <input type="range" id="amountSlider" min="1" max="100" value="10">
+                    <span class="slider-value" id="amountValue">10</span>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label>Interval between shares (seconds)</label>
+                <div class="slider-container">
+                    <input type="range" id="intervalSlider" min="1" max="30" value="5">
+                    <span class="slider-value" id="intervalValue">5</span>
+                </div>
+            </div>
+        </div>
+        
+        <button class="btn btn-primary" id="startBtn">🚀 START SHARING</button>
+        
+        <!-- Loading -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Starting share session...</p>
+        </div>
+        
+        <!-- Status -->
+        <div class="status" id="status"></div>
+        
+        <!-- Progress -->
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">Starting...</div>
+        </div>
+    </div>
+    
+    <script>
+        // DOM Elements
+        const jsonInput = document.getElementById('jsonInput');
+        const cookieStringInput = document.getElementById('cookieStringInput');
+        const netscapeInput = document.getElementById('netscapeInput');
+        const urlInput = document.getElementById('urlInput');
+        const amountSlider = document.getElementById('amountSlider');
+        const intervalSlider = document.getElementById('intervalSlider');
+        const amountValue = document.getElementById('amountValue');
+        const intervalValue = document.getElementById('intervalValue');
+        const startBtn = document.getElementById('startBtn');
+        const loading = document.getElementById('loading');
+        const statusDiv = document.getElementById('status');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        
+        let currentFormat = 'json';
+        
+        // Tab switching
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active tab button
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Update active content
+                const tabId = btn.getAttribute('data-tab');
+                currentFormat = tabId;
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+        
+        // Update slider values
+        amountSlider.addEventListener('input', () => {
+            amountValue.textContent = amountSlider.value;
+        });
+        
+        intervalSlider.addEventListener('input', () => {
+            intervalValue.textContent = intervalSlider.value;
+        });
+        
+        function showStatus(message, type = 'info') {
+            statusDiv.className = `status status-${type}`;
+            statusDiv.innerHTML = message;
+            statusDiv.style.display = 'block';
+        }
+        
+        function hideStatus() {
+            statusDiv.style.display = 'none';
+        }
+        
+        function showProgress(progress) {
+            progressContainer.style.display = 'block';
+            progressFill.style.width = `${progress}%`;
+            progressText.textContent = `Progress: ${Math.round(progress)}%`;
+        }
+        
+        function hideProgress() {
+            progressContainer.style.display = 'none';
+            progressFill.style.width = '0%';
+        }
+        
+        // Get cookie from current format
+        function getCookieString() {
+            if (currentFormat === 'json') {
+                const jsonData = jsonInput.value.trim();
+                if (!jsonData) return null;
+                try {
+                    const parsed = JSON.parse(jsonData);
+                    if (Array.isArray(parsed)) {
+                        return parsed.map(c => `${c.key || c.name}=${c.value}`).join('; ');
+                    }
+                    return null;
+                } catch (e) {
+                    return null;
+                }
+            } else if (currentFormat === 'cookie') {
+                return cookieStringInput.value.trim();
+            } else if (currentFormat === 'netscape') {
+                const netscapeData = netscapeInput.value.trim();
+                if (!netscapeData) return null;
+                // Parse Netscape format to cookie string
+                const cookies = [];
+                const lines = netscapeData.split('\n');
+                for (const line of lines) {
+                    if (line.startsWith('#') || !line.trim()) continue;
+                    const parts = line.split('\t');
+                    if (parts.length >= 7) {
+                        const name = parts[5];
+                        const value = parts[6];
+                        if (name && value && (parts[0].includes('facebook.com'))) {
+                            cookies.push(`${name}=${value}`);
+                        }
+                    }
+                }
+                return cookies.join('; ');
+            }
+            return null;
+        }
+        
+        // Validate current format
+        function validateInput() {
+            if (currentFormat === 'json') {
+                const value = jsonInput.value.trim();
+                if (!value) return { valid: false, message: 'Please paste your appstate JSON' };
+                try {
+                    const parsed = JSON.parse(value);
+                    if (!Array.isArray(parsed)) {
+                        return { valid: false, message: 'JSON must be an array of cookies' };
+                    }
+                    const hasCUser = parsed.some(c => c.key === 'c_user' || c.name === 'c_user');
+                    const hasXs = parsed.some(c => c.key === 'xs' || c.name === 'xs');
+                    if (!hasCUser || !hasXs) {
+                        return { valid: false, message: 'Missing required cookies: c_user and xs' };
+                    }
+                    return { valid: true };
+                } catch (e) {
+                    return { valid: false, message: 'Invalid JSON format: ' + e.message };
+                }
+            } else if (currentFormat === 'cookie') {
+                const value = cookieStringInput.value.trim();
+                if (!value) return { valid: false, message: 'Please paste your cookie string' };
+                if (!value.includes('c_user=') || !value.includes('xs=')) {
+                    return { valid: false, message: 'Cookie missing required fields: c_user and xs' };
+                }
+                return { valid: true };
+            } else if (currentFormat === 'netscape') {
+                const value = netscapeInput.value.trim();
+                if (!value) return { valid: false, message: 'Please paste your Netscape cookie file' };
+                if (!value.includes('c_user') || !value.includes('xs')) {
+                    return { valid: false, message: 'Netscape file missing required cookies: c_user and xs' };
+                }
+                return { valid: true };
+            }
+            return { valid: false, message: 'Unknown format' };
+        }
+        
+        function validateUrl() {
+            const url = urlInput.value.trim();
+            if (!url) return { valid: false, message: 'Please enter a Facebook post URL' };
+            if (!url.includes('facebook.com') && !url.includes('fb.com')) {
+                return { valid: false, message: 'Please enter a valid Facebook URL' };
+            }
+            return { valid: true };
+        }
+        
+        async function startSharing() {
+            // Validate inputs
+            const inputValidation = validateInput();
+            if (!inputValidation.valid) {
+                showStatus(inputValidation.message, 'error');
+                return;
+            }
+            
+            const urlValidation = validateUrl();
+            if (!urlValidation.valid) {
+                showStatus(urlValidation.message, 'error');
+                return;
+            }
+            
+            const cookieString = getCookieString();
+            if (!cookieString) {
+                showStatus('Failed to parse cookie data', 'error');
+                return;
+            }
+            
+            const amount = parseInt(amountSlider.value);
+            const interval = parseInt(intervalSlider.value);
+            
+            hideStatus();
+            hideProgress();
+            loading.style.display = 'block';
+            startBtn.disabled = true;
+            
+            try {
+                const response = await fetch('/api/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        cookie: cookieString,
+                        url: urlInput.value.trim(),
+                        amount: amount,
+                        interval: interval
+                    })
+                });
+                
+                const data = await response.json();
+                
+                loading.style.display = 'none';
+                startBtn.disabled = false;
+                
+                if (data.status === 200) {
+                    showStatus(`
+                        <strong>✅ Share session started!</strong><br>
+                        📎 Post: ${data.details.url}<br>
+                        📊 Amount: ${data.details.amount} shares<br>
+                        ⏱️ Interval: ${data.details.interval} seconds<br><br>
+                        The bot will automatically share the post. Please keep this page open.
+                    `, 'success');
+                    
+                    // Estimated time
+                    const totalSeconds = amount * interval;
+                    const minutes = Math.floor(totalSeconds / 60);
+                    const seconds = totalSeconds % 60;
+                    if (minutes > 0) {
+                        progressText.textContent = `Estimated time: ${minutes} minute(s) ${seconds} second(s)`;
+                    } else {
+                        progressText.textContent = `Estimated time: ${seconds} seconds`;
+                    }
+                    showProgress(0);
+                    
+                    // Progress simulation
+                    let progress = 0;
+                    const intervalMs = interval * 1000;
+                    const totalTime = amount * intervalMs;
+                    const startTime = Date.now();
+                    
+                    const progressInterval = setInterval(() => {
+                        const elapsed = Date.now() - startTime;
+                        progress = Math.min(100, (elapsed / totalTime) * 100);
+                        progressFill.style.width = `${progress}%`;
+                        progressText.innerHTML = `Progress: ${Math.round(progress)}% - Shares: ${Math.floor(elapsed / intervalMs)}/${amount}`;
+                        
+                        if (progress >= 100) {
+                            clearInterval(progressInterval);
+                            progressText.innerHTML = `✅ Completed! ${amount}/${amount} shares sent.`;
+                        }
+                    }, 1000);
+                    
+                } else {
+                    showStatus(`❌ Error: ${data.error || 'Unknown error'}`, 'error');
+                }
+            } catch (error) {
+                loading.style.display = 'none';
+                startBtn.disabled = false;
+                showStatus(`❌ Network error: ${error.message}`, 'error');
+            }
+        }
+        
+        startBtn.addEventListener('click', startSharing);
+        
+        // Load saved data from localStorage
+        const savedJson = localStorage.getItem('fb_json');
+        const savedCookie = localStorage.getItem('fb_cookie_string');
+        const savedNetscape = localStorage.getItem('fb_netscape');
+        const savedUrl = localStorage.getItem('fb_url');
+        
+        if (savedJson) jsonInput.value = savedJson;
+        if (savedCookie) cookieStringInput.value = savedCookie;
+        if (savedNetscape) netscapeInput.value = savedNetscape;
+        if (savedUrl) urlInput.value = savedUrl;
+        
+        // Save data when changed
+        jsonInput.addEventListener('change', () => {
+            localStorage.setItem('fb_json', jsonInput.value);
+        });
+        
+        cookieStringInput.addEventListener('change', () => {
+            localStorage.setItem('fb_cookie_string', cookieStringInput.value);
+        });
+        
+        netscapeInput.addEventListener('change', () => {
+            localStorage.setItem('fb_netscape', netscapeInput.value);
+        });
+        
+        urlInput.addEventListener('change', () => {
+            localStorage.setItem('fb_url', urlInput.value);
+        });
+    </script>
+</body>
+</html>

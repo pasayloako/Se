@@ -7,7 +7,7 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-const allowedOrigin = ["https://fb-sharer-by-bogart.vercel.app", "https://lalat.vercel.app", "http://localhost:3000", "http://localhost:5000"];
+const allowedOrigin = ["https://fbshareselov.vercel.app", "https://shareselov.vercel.app"];
 
 app.use(cors());
 app.use(express.json());

@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 5000;
 
 // 3 Server URLs (update with your actual server URLs)
 const SERVER_URLS = {
-  server1: process.env.SERVER1_URL || 'https://server1-project502.onrender.com',
+  server1: process.env.SERVER1_URL || 'https://serverselov1.onrender.com',
   server2: process.env.SERVER2_URL || 'https://server2-project502.onrender.com',
   server3: process.env.SERVER3_URL || 'https://server3-project502.onrender.com'
 };

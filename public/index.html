@@ -24,7 +24,10 @@
             'input-bg': 'rgba(43, 42, 62, 0.5)',
             'input-border': 'rgba(139, 92, 246, 0.3)',
             'nav-bg': 'rgba(30, 26, 52, 0.95)',
-            'nav-border': 'rgba(139, 92, 246, 0.2)'
+            'nav-border': 'rgba(139, 92, 246, 0.2)',
+            'status-active': '#22c55e',
+            'status-offline': '#ef4444',
+            'status-checking': '#f59e0b'
           }
         }
       }
@@ -43,6 +46,11 @@
     .format-content { display: none; }
     .format-content.active { display: block; }
     .nav-indicator { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .server-item { transition: all 0.2s ease; cursor: pointer; }
+    .server-item:hover:not(.disabled) { background: rgba(139, 92, 246, 0.1); transform: scale(1.02); }
+    .server-item.disabled { opacity: 0.5; cursor: not-allowed; }
+    .server-item.selected { border-color: #8B5CF6 !important; background: rgba(139, 92, 246, 0.15) !important; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
     textarea, input { outline: none; }
     textarea:focus, input:focus { border-color: #8B5CF6 !important; ring: 2px solid rgba(139, 92, 246, 0.2); }
   </style>
@@ -87,7 +95,7 @@
               <label class="text-sm font-medium text-text-muted mb-1.5 block flex items-center gap-1.5">
                 <i data-lucide="code" class="w-4 h-4 text-primary"></i> Appstate JSON:
               </label>
-              <textarea id="jsonInput" rows="6" class="w-full p-3 rounded-lg border bg-input-bg border-input-border text-text-main placeholder-text-muted focus:border-primary transition-all text-sm font-mono" placeholder='[
+              <textarea id="jsonInput" rows="5" class="w-full p-3 rounded-lg border bg-input-bg border-input-border text-text-main placeholder-text-muted focus:border-primary transition-all text-sm font-mono" placeholder='[
   {"key": "c_user", "value": "61588731246204"},
   {"key": "xs", "value": "45%3A_SblN0PXwBJUIw%3A2%3A1778170950%3A-1%3A-1"}
 ]'></textarea>
@@ -101,7 +109,7 @@
               <label class="text-sm font-medium text-text-muted mb-1.5 block flex items-center gap-1.5">
                 <i data-lucide="cookie" class="w-4 h-4 text-primary"></i> Cookie String:
               </label>
-              <textarea id="cookieInput" rows="4" class="w-full p-3 rounded-lg border bg-input-bg border-input-border text-text-main placeholder-text-muted focus:border-primary transition-all text-sm font-mono" placeholder='c_user=61588731246204; xs=45%3A_SblN0PXwBJUIw%3A2%3A1778170950%3A-1%3A-1; datr=Erz8aTlBx7on9c6fJoYHIyWt'></textarea>
+              <textarea id="cookieInput" rows="3" class="w-full p-3 rounded-lg border bg-input-bg border-input-border text-text-main placeholder-text-muted focus:border-primary transition-all text-sm font-mono" placeholder='c_user=61588731246204; xs=45%3A_SblN0PXwBJUIw%3A2%3A1778170950%3A-1%3A-1'></textarea>
               <p class="text-xs text-text-muted mt-1">Format: name=value; name2=value2</p>
             </div>
           </div>
@@ -112,7 +120,7 @@
               <label class="text-sm font-medium text-text-muted mb-1.5 block flex items-center gap-1.5">
                 <i data-lucide="file-text" class="w-4 h-4 text-primary"></i> Netscape Format:
               </label>
-              <textarea id="netscapeInput" rows="5" class="w-full p-3 rounded-lg border bg-input-bg border-input-border text-text-main placeholder-text-muted focus:border-primary transition-all text-sm font-mono" placeholder='# Netscape HTTP Cookie File
+              <textarea id="netscapeInput" rows="4" class="w-full p-3 rounded-lg border bg-input-bg border-input-border text-text-main placeholder-text-muted focus:border-primary transition-all text-sm font-mono" placeholder='# Netscape HTTP Cookie File
 .facebook.com	TRUE	/	FALSE	0	c_user	61588731246204
 .facebook.com	TRUE	/	FALSE	0	xs	45%3A_SblN0PXwBJUIw%3A2%3A1778170950%3A-1%3A-1'></textarea>
               <p class="text-xs text-text-muted mt-1">Paste Netscape format cookie file</p>
@@ -143,8 +151,40 @@
             </div>
           </div>
 
+          <!-- Server Selection -->
+          <div>
+            <label class="text-sm font-medium text-text-muted mb-2 block flex items-center gap-1.5">
+              <i data-lucide="server" class="w-4 h-4 text-primary"></i> Select Server:
+            </label>
+            <div class="grid grid-cols-3 gap-2">
+              <div data-server="server1" class="server-item p-3 rounded-lg border border-input-border bg-input-bg text-center">
+                <div class="flex items-center justify-center gap-2 mb-1">
+                  <span class="status-dot bg-status-checking"></span>
+                  <span class="font-medium text-sm">Server 1</span>
+                </div>
+                <span class="server-status text-xs text-text-muted">Checking...</span>
+              </div>
+              <div data-server="server2" class="server-item p-3 rounded-lg border border-input-border bg-input-bg text-center">
+                <div class="flex items-center justify-center gap-2 mb-1">
+                  <span class="status-dot bg-status-checking"></span>
+                  <span class="font-medium text-sm">Server 2</span>
+                </div>
+                <span class="server-status text-xs text-text-muted">Checking...</span>
+              </div>
+              <div data-server="server3" class="server-item p-3 rounded-lg border border-input-border bg-input-bg text-center">
+                <div class="flex items-center justify-center gap-2 mb-1">
+                  <span class="status-dot bg-status-checking"></span>
+                  <span class="font-medium text-sm">Server 3</span>
+                </div>
+                <span class="server-status text-xs text-text-muted">Checking...</span>
+              </div>
+            </div>
+            <input type="hidden" id="selectedServer" value="">
+            <p id="serverWarning" class="text-xs text-red-400 mt-2 hidden">Please select an active server</p>
+          </div>
+
           <!-- Start Button -->
-          <button type="submit" id="submitBtn" class="w-full bg-primary text-white py-3 rounded-lg font-semibold text-base hover:bg-primary-darker transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg shadow-primary/30 active:scale-[0.98] mt-6">
+          <button type="submit" id="submitBtn" class="w-full bg-primary text-white py-3 rounded-lg font-semibold text-base hover:bg-primary-darker transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg shadow-primary/30 active:scale-[0.98] mt-4">
             <i data-lucide="rocket" class="w-5 h-5"></i>
             <span>Start Boosting</span>
           </button>
@@ -168,15 +208,15 @@
         <div class="space-y-3">
           <div class="flex items-start gap-3 p-3 rounded-lg bg-primary/10 border border-primary/30">
             <i data-lucide="info" class="w-5 h-5 text-primary flex-shrink-0 mt-0.5"></i>
-            <span class="text-sm text-info-text">Supports Appstate JSON, Cookie String, and Netscape formats!</span>
+            <span class="text-sm">✅ 3 servers available! Choose the fastest one for best results.</span>
           </div>
-          <div class="flex items-start gap-3 p-3 rounded-lg bg-primary/10 border border-primary/30">
+          <div class="flex items-start gap-3 p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/30">
             <i data-lucide="alert-triangle" class="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5"></i>
-            <span class="text-sm text-yellow-200">Use responsibly. Avoid excessive sharing to prevent restrictions.</span>
+            <span class="text-sm text-yellow-200">⚠️ Use responsibly. Avoid excessive sharing to prevent restrictions.</span>
           </div>
-          <div class="flex items-start gap-3 p-3 rounded-lg bg-primary/10 border border-primary/30">
+          <div class="flex items-start gap-3 p-3 rounded-lg bg-green-500/10 border border-green-500/30">
             <i data-lucide="check-circle" class="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5"></i>
-            <span class="text-sm text-green-200">Make sure your cookie contains c_user and xs values.</span>
+            <span class="text-sm text-green-200">✓ Make sure your cookie contains c_user and xs values.</span>
           </div>
         </div>
       </section>
@@ -206,7 +246,7 @@
 
   <!-- Modal -->
   <div id="responseModal" class="fixed inset-0 bg-black/70 z-50 hidden justify-center items-center p-4">
-    <div class="bg-modal-bg rounded-xl p-5 max-w-sm w-full text-center border border-border-color">
+    <div class="bg-[#2a2744] rounded-xl p-5 max-w-sm w-full text-center border border-border-color">
       <div id="modalIcon" class="flex justify-center mb-3">
         <i data-lucide="info" class="w-12 h-12 text-primary"></i>
       </div>
@@ -259,24 +299,16 @@ const postUrl = document.getElementById('postUrl');
 const shareAmount = document.getElementById('shareAmount');
 const shareInterval = document.getElementById('shareInterval');
 const submitBtn = document.getElementById('submitBtn');
+const selectedServerInput = document.getElementById('selectedServer');
+const serverWarning = document.getElementById('serverWarning');
 const modal = document.getElementById('responseModal');
 const modalMessage = document.getElementById('modalMessage');
 const modalIcon = document.getElementById('modalIcon');
 const closeModal = document.getElementById('closeModal');
 
 let currentFormat = 'json';
-
-// Format switching
-document.querySelectorAll('.format-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.format-tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    currentFormat = tab.dataset.format;
-    
-    document.querySelectorAll('.format-content').forEach(content => content.classList.remove('active'));
-    document.getElementById(`${currentFormat}-format`).classList.add('active');
-  });
-});
+let selectedServer = null;
+let serverStatus = { server1: false, server2: false, server3: false };
 
 // Get current cookie value
 function getCookieValue() {
@@ -288,6 +320,115 @@ function getCookieValue() {
     return netscapeInput.value.trim();
   }
 }
+
+// Validate form
+function validateForm() {
+  const cookie = getCookieValue();
+  const url = postUrl.value.trim();
+  const amount = shareAmount.value;
+  const interval = shareInterval.value;
+  
+  const isValid = cookie && url && amount && interval && selectedServer && serverStatus[selectedServer];
+  
+  if (isValid) {
+    submitBtn.disabled = false;
+    submitBtn.style.opacity = '1';
+    if (serverWarning) serverWarning.classList.add('hidden');
+  } else {
+    submitBtn.disabled = true;
+    submitBtn.style.opacity = '0.5';
+    if (!selectedServer && serverWarning) serverWarning.classList.remove('hidden');
+  }
+}
+
+// Check server status
+async function checkServerStatus() {
+  try {
+    const response = await fetch('/api/servers/status');
+    const data = await response.json();
+    
+    for (const [key, info] of Object.entries(data.servers)) {
+      const serverElement = document.querySelector(`.server-item[data-server="${key}"]`);
+      if (!serverElement) continue;
+      
+      const statusDot = serverElement.querySelector('.status-dot');
+      const statusText = serverElement.querySelector('.server-status');
+      
+      if (info.online) {
+        statusDot.className = 'status-dot bg-status-active';
+        statusText.textContent = 'Active';
+        statusText.className = 'server-status text-xs text-green-400';
+        serverElement.classList.remove('disabled');
+        serverStatus[key] = true;
+      } else {
+        statusDot.className = 'status-dot bg-status-offline';
+        statusText.textContent = 'Offline';
+        statusText.className = 'server-status text-xs text-red-400';
+        serverElement.classList.add('disabled');
+        serverStatus[key] = false;
+        
+        // If selected server is offline, clear selection
+        if (selectedServer === key) {
+          selectedServer = null;
+          selectedServerInput.value = '';
+          document.querySelectorAll('.server-item').forEach(item => {
+            item.classList.remove('selected');
+          });
+          validateForm();
+        }
+      }
+    }
+  } catch (error) {
+    console.error('Failed to check server status:', error);
+  }
+}
+
+// Server selection
+document.querySelectorAll('.server-item').forEach(serverItem => {
+  serverItem.addEventListener('click', () => {
+    if (serverItem.classList.contains('disabled')) {
+      showModal('This server is offline. Please select another server.', true);
+      return;
+    }
+    
+    const serverKey = serverItem.dataset.server;
+    
+    // Remove selection from all
+    document.querySelectorAll('.server-item').forEach(item => {
+      item.classList.remove('selected');
+    });
+    
+    // Add selection to current
+    serverItem.classList.add('selected');
+    
+    selectedServer = serverKey;
+    selectedServerInput.value = serverKey;
+    
+    validateForm();
+  });
+});
+
+// Format switching
+document.querySelectorAll('.format-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.format-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    currentFormat = tab.dataset.format;
+    
+    document.querySelectorAll('.format-content').forEach(content => content.classList.remove('active'));
+    document.getElementById(`${currentFormat}-format`).classList.add('active');
+    
+    validateForm();
+  });
+});
+
+// Input validation triggers
+[jsonInput, cookieInput, netscapeInput, postUrl, shareAmount, shareInterval].forEach(input => {
+  if (input) {
+    input.addEventListener('input', validateForm);
+    input.addEventListener('change', validateForm);
+  }
+});
 
 function showModal(message, isError = false) {
   modalMessage.textContent = message;
@@ -340,6 +481,11 @@ document.getElementById('share-form').addEventListener('submit', async (e) => {
     return;
   }
   
+  if (!selectedServer) {
+    showModal('Please select an active server', true);
+    return;
+  }
+  
   // Disable button
   submitBtn.disabled = true;
   const originalText = submitBtn.querySelector('span').textContent;
@@ -353,7 +499,8 @@ document.getElementById('share-form').addEventListener('submit', async (e) => {
         cookie, 
         url, 
         amount: parseInt(amount), 
-        interval: parseInt(interval) 
+        interval: parseInt(interval),
+        server: selectedServer
       })
     });
     
@@ -361,11 +508,16 @@ document.getElementById('share-form').addEventListener('submit', async (e) => {
     
     if (response.ok && data.status === 200) {
       showModal(data.message || 'Share session started successfully!');
-      // Clear forms
-      jsonInput.value = '';
-      cookieInput.value = '';
-      netscapeInput.value = '';
-      postUrl.value = '';
+      // Optionally clear form
+      // jsonInput.value = '';
+      // cookieInput.value = '';
+      // netscapeInput.value = '';
+      // postUrl.value = '';
+      // selectedServer = null;
+      // selectedServerInput.value = '';
+      // document.querySelectorAll('.server-item').forEach(item => {
+      //   item.classList.remove('selected');
+      // });
     } else {
       showModal(data.error || 'Failed to start share session.', true);
     }
@@ -374,6 +526,7 @@ document.getElementById('share-form').addEventListener('submit', async (e) => {
   } finally {
     submitBtn.disabled = false;
     submitBtn.querySelector('span').textContent = originalText;
+    validateForm();
   }
 });
 
@@ -450,8 +603,11 @@ menuBtn.addEventListener('click', openSideMenu);
 closeMenuBtn.addEventListener('click', closeSideMenu);
 menuOverlay.addEventListener('click', closeSideMenu);
 
-// Set initial active section
+// Initialize
 setActiveSection('home');
+checkServerStatus();
+setInterval(checkServerStatus, 60000);
+validateForm();
 </script>
 </body>
 </html>
